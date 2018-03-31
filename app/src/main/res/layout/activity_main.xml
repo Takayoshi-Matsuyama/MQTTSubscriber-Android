@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/backgroundLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:clickable="true"
     tools:context=".MainActivity">
 
     <TextView
@@ -24,7 +25,7 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/brokerIpEditText"
         android:layout_width="329dp"
         android:layout_height="41dp"
         android:layout_marginEnd="15dp"
@@ -50,10 +51,10 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText" />
+        app:layout_constraintTop_toBottomOf="@+id/brokerIpEditText" />
 
     <EditText
-        android:id="@+id/editText2"
+        android:id="@+id/topicEditText"
         android:layout_width="329dp"
         android:layout_height="44dp"
         android:layout_marginEnd="15dp"
@@ -67,7 +68,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/subscribeButton"
         android:layout_width="129dp"
         android:layout_height="52dp"
         android:layout_marginBottom="271dp"
@@ -79,12 +80,12 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText2" />
+        app:layout_constraintTop_toBottomOf="@+id/topicEditText" />
 
     <Button
-        android:id="@+id/button2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/unsubscribeButton"
+        android:layout_width="131dp"
+        android:layout_height="46dp"
         android:layout_marginBottom="273dp"
         android:layout_marginEnd="73dp"
         android:layout_marginStart="54dp"
@@ -92,24 +93,24 @@
         android:text="Unsubscribe"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/button"
-        app:layout_constraintTop_toBottomOf="@+id/editText2"
+        app:layout_constraintHorizontal_bias="0.271"
+        app:layout_constraintStart_toEndOf="@+id/subscribeButton"
+        app:layout_constraintTop_toBottomOf="@+id/topicEditText"
         app:layout_constraintVertical_bias="0.0" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/testPublishButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="3dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="7dp"
         android:text="Test Publish"
-        app:layout_constraintBottom_toTopOf="@+id/button"
-        app:layout_constraintEnd_toStartOf="@+id/editText2"
+        app:layout_constraintBottom_toTopOf="@+id/subscribeButton"
+        app:layout_constraintEnd_toStartOf="@+id/topicEditText"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView5" />
+        app:layout_constraintTop_toBottomOf="@+id/outputTextView" />
 
     <TextView
         android:id="@+id/textView4"
@@ -119,10 +120,10 @@
         android:layout_marginTop="17dp"
         android:text="Received Message"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button" />
+        app:layout_constraintTop_toBottomOf="@+id/subscribeButton" />
 
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/outputTextView"
         android:layout_width="331dp"
         android:layout_height="138dp"
         android:layout_marginBottom="7dp"
@@ -130,7 +131,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="14dp"
         android:text="Message"
-        app:layout_constraintBottom_toTopOf="@+id/button3"
+        app:layout_constraintBottom_toTopOf="@+id/testPublishButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView4" />
