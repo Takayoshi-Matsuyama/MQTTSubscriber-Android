@@ -98,20 +98,6 @@
         app:layout_constraintTop_toBottomOf="@+id/topicEditText"
         app:layout_constraintVertical_bias="0.0" />
 
-    <Button
-        android:id="@+id/testPublishButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="3dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="7dp"
-        android:text="Test Publish"
-        app:layout_constraintBottom_toTopOf="@+id/subscribeButton"
-        app:layout_constraintEnd_toStartOf="@+id/topicEditText"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/outputTextView" />
-
     <TextView
         android:id="@+id/textView4"
         android:layout_width="wrap_content"

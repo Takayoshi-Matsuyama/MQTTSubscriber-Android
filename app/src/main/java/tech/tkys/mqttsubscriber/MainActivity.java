@@ -3,12 +3,15 @@ package tech.tkys.mqttsubscriber;
 import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import org.eclipse.paho.android.service.MqttAndroidClient;
 import org.eclipse.paho.client.mqttv3.IMqttActionListener;
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.IMqttToken;
+import org.eclipse.paho.client.mqttv3.MqttCallbackExtended;
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
@@ -19,10 +22,16 @@ import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
+    MqttHelper mqttHelper;
+
+    TextView outputTextView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        this.setContentView(R.layout.activity_main);
+
+        outputTextView = findViewById(R.id.outputTextView);
 
         final Context applicationContext = this.getApplicationContext();
 
@@ -47,38 +56,32 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        findViewById(R.id.testPublishButton).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String brokerURI = "tcp://192.168.0.3:1883";
-                String topic = "MQTTTest";
-                int qos = 2;    // Quality of Service (2: Exactly once delivery)
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss.SSS");
-                String messageString = String.format("Hello from MQTT Publisher (Xperia): %s", sdf.format(new Date()));
-
-                publishToBroker(applicationContext, brokerURI, topic, messageString, qos);
-            }
-        });
+        this.startMqtt();
     }
 
-    private static void publishToBroker(android.content.Context context, String brokerURI, String topic, String messageString, int qos){
+    private void startMqtt(){
+        mqttHelper = new MqttHelper(getApplicationContext());
+        mqttHelper.setCallback(new MqttCallbackExtended() {
+            @Override
+            public void connectComplete(boolean b, String s) {
 
-        try {
-            // Create a client to publish.
-            MqttAndroidClient mqttAndroidClient = new MqttAndroidClient(context, brokerURI, MqttClient.generateClientId());
+            }
 
-            // Connect to the MQTT server.
-            MqttConnectOptions mqttConnectOptions = new MqttConnectOptions();
-            mqttConnectOptions.setCleanSession(true);
-            mqttAndroidClient.connect(mqttConnectOptions);
+            @Override
+            public void connectionLost(Throwable throwable) {
 
-            // Publish the message.
-            MqttMessage message = new MqttMessage(messageString.getBytes());
-            message.setQos(qos);
-            mqttAndroidClient.publish(topic, message);
-        } catch (MqttException e) {
-            System.err.println("Error Publishing: " + e.getMessage());
-            e.printStackTrace();
-        }
+            }
+
+            @Override
+            public void messageArrived(String topic, MqttMessage mqttMessage) throws Exception {
+                Log.w("Debug",mqttMessage.toString());
+                outputTextView.setText(mqttMessage.toString());
+            }
+
+            @Override
+            public void deliveryComplete(IMqttDeliveryToken iMqttDeliveryToken) {
+
+            }
+        });
     }
 }
