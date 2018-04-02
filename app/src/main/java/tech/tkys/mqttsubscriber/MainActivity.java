@@ -26,6 +26,8 @@ public class MainActivity extends AppCompatActivity {
 
     TextView outputTextView;
 
+    String outputText = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,24 +66,28 @@ public class MainActivity extends AppCompatActivity {
         mqttHelper.setCallback(new MqttCallbackExtended() {
             @Override
             public void connectComplete(boolean b, String s) {
-
+                appendOutputText("Connected to broker.");
             }
 
             @Override
             public void connectionLost(Throwable throwable) {
-
+                appendOutputText("Connection lost.");
             }
 
             @Override
             public void messageArrived(String topic, MqttMessage mqttMessage) throws Exception {
-                Log.w("Debug",mqttMessage.toString());
-                outputTextView.setText(mqttMessage.toString());
+                appendOutputText(mqttMessage.toString());
             }
 
             @Override
             public void deliveryComplete(IMqttDeliveryToken iMqttDeliveryToken) {
-
+                appendOutputText("Delivery Completed.");
             }
         });
+    }
+
+    private void appendOutputText(String text) {
+        outputText = String.format("%s%n%s", outputText, text);
+        outputTextView.setText(outputText);
     }
 }
