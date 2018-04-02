@@ -28,6 +28,12 @@ public class MainActivity extends AppCompatActivity {
 
     String outputText = "";
 
+    public void appendOutputText(String text) {
+        outputText = String.format("%s%n%s", outputText, text);
+        outputTextView.setText(outputText);
+        Log.w("MQTT", outputText);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,11 +68,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void startMqtt(){
-        mqttHelper = new MqttHelper(getApplicationContext());
+        mqttHelper = new MqttHelper(this);
         mqttHelper.setCallback(new MqttCallbackExtended() {
             @Override
             public void connectComplete(boolean b, String s) {
-                appendOutputText("Connected to broker.");
+                // Do nothing (MqttHelper handles this.)
             }
 
             @Override
@@ -84,10 +90,7 @@ public class MainActivity extends AppCompatActivity {
                 appendOutputText("Delivery Completed.");
             }
         });
-    }
 
-    private void appendOutputText(String text) {
-        outputText = String.format("%s%n%s", outputText, text);
-        outputTextView.setText(outputText);
+        mqttHelper.connect();
     }
 }

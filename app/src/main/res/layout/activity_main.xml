@@ -69,8 +69,8 @@
 
     <Button
         android:id="@+id/subscribeButton"
-        android:layout_width="129dp"
-        android:layout_height="52dp"
+        android:layout_width="130dp"
+        android:layout_height="50dp"
         android:layout_marginBottom="271dp"
         android:layout_marginEnd="256dp"
         android:layout_marginStart="32dp"
@@ -84,8 +84,8 @@
 
     <Button
         android:id="@+id/unsubscribeButton"
-        android:layout_width="131dp"
-        android:layout_height="46dp"
+        android:layout_width="130dp"
+        android:layout_height="50dp"
         android:layout_marginBottom="273dp"
         android:layout_marginEnd="73dp"
         android:layout_marginStart="54dp"
@@ -98,29 +98,26 @@
         app:layout_constraintTop_toBottomOf="@+id/topicEditText"
         app:layout_constraintVertical_bias="0.0" />
 
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="17dp"
-        android:text="Received Message"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/subscribeButton" />
-
-    <TextView
-        android:id="@+id/outputTextView"
-        android:layout_width="331dp"
-        android:layout_height="138dp"
-        android:layout_marginBottom="7dp"
-        android:layout_marginEnd="13dp"
+    <ScrollView
+        android:layout_width="333dp"
+        android:layout_height="245dp"
+        android:layout_marginBottom="11dp"
+        android:layout_marginEnd="11dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="14dp"
-        android:text="Message"
-        app:layout_constraintBottom_toTopOf="@+id/testPublishButton"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
-    d
+        app:layout_constraintTop_toBottomOf="@+id/subscribeButton">
+
+        <TextView
+            android:id="@+id/outputTextView"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:text="Message" />
+    </ScrollView>
+
+
+
 
 </android.support.constraint.ConstraintLayout>
