@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -15,6 +16,10 @@ public class MainActivity extends AppCompatActivity {
 
     MqttHelper mqttHelper;
 
+    Button subscribeButton;
+
+    Button unsubscribeButton;
+
     EditText brokerIpEditText;
 
     EditText brokerPortEditText;
@@ -25,7 +30,15 @@ public class MainActivity extends AppCompatActivity {
 
     String outputText = "";
 
-    boolean subscribed;
+    public void onSubscriptionStatusChanged(boolean isSubscribed) {
+        if (isSubscribed) {
+            subscribeButton.setEnabled(false);
+            unsubscribeButton.setEnabled(true);
+        } else {
+            subscribeButton.setEnabled(true);
+            unsubscribeButton.setEnabled(false);
+        }
+    }
 
     public void appendOutputText(String text) {
         outputText = String.format("%s%n%s", outputText, text);
@@ -38,13 +51,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.activity_main);
 
+        subscribeButton = findViewById(R.id.subscribeButton);
+        unsubscribeButton = findViewById(R.id.unsubscribeButton);
         brokerIpEditText = findViewById(R.id.brokerIpEditText);
         brokerPortEditText = findViewById(R.id.brokerPortEditText);
         topicEditText = findViewById(R.id.topicEditText);
         outputTextView = findViewById(R.id.outputTextView);
 
-        // Subscribe button
-        findViewById(R.id.subscribeButton).setOnClickListener(new View.OnClickListener() {
+        subscribeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String serverIpAddress = brokerIpEditText.getText().toString();
@@ -56,8 +70,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // Unsubscribe button
-        findViewById(R.id.unsubscribeButton).setOnClickListener(new View.OnClickListener() {
+        unsubscribeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String topic = topicEditText.getText().toString();
@@ -75,5 +88,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
         mqttHelper = new MqttHelper(this);
+        unsubscribeButton.setEnabled(false);
     }
 }

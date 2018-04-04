@@ -53,8 +53,6 @@ public class MqttHelper {
         MqttConnectOptions mqttConnectOptions = new MqttConnectOptions();
         mqttConnectOptions.setAutomaticReconnect(true);
         mqttConnectOptions.setCleanSession(false);
-//        mqttConnectOptions.setUserName(username);
-//        mqttConnectOptions.setPassword(password.toCharArray());
 
         try {
             mainActivity.appendOutputText("Connecting");
@@ -96,12 +94,14 @@ public class MqttHelper {
                 public void onSuccess(IMqttToken asyncActionToken) {
                     String topic = (String)asyncActionToken.getUserContext();
                     mainActivity.appendOutputText(String.format("Unsubscribed to topic: %s", topic));
+                    mainActivity.onSubscriptionStatusChanged(false);
+
                     disconnect();
                 }
 
                 @Override
                 public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
-
+                    mainActivity.appendOutputText(String.format("Failed to unsubscribe: %s", exception.toString()));
                 }
             });
         } catch (MqttException e) {
@@ -116,6 +116,8 @@ public class MqttHelper {
                 public void onSuccess(IMqttToken asyncActionToken) {
                     String topic = (String)asyncActionToken.getUserContext();
                     mainActivity.appendOutputText(String.format("Subscribed to topic: %s", topic));
+
+                    mainActivity.onSubscriptionStatusChanged(true);
                 }
 
                 @Override
