@@ -47,8 +47,11 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.subscribeButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String serverURI = brokerIpEditText.getText().toString();
+                String serverIpAddress = brokerIpEditText.getText().toString();
+                String serverPort = brokerPortEditText.getText().toString();
+                String serverURI = String.format("tcp://%s:%s", serverIpAddress, serverPort);
                 String topic = topicEditText.getText().toString();
+
                 mqttHelper.subscribe(serverURI, topic);
             }
         });
@@ -57,7 +60,9 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.unsubscribeButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String topic = topicEditText.getText().toString();
 
+                mqttHelper.unsubscribe(topic);
             }
         });
 

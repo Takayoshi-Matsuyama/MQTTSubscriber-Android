@@ -17,22 +17,10 @@ public class MqttHelper {
 
     private MqttAndroidClient mqttAndroidClient;
 
-//    final String serverURI = "tcp://192.168.0.3:1883";
-
     final String clientId = "ExampleAndroidClient";
-//    final String subscriptionTopic = "MQTTTest";
-
-//    final String username = "xxxxxxx";
-//    final String password = "yyyyyyyyyy";
-
-    String brokerUri;
 
     public MqttHelper(MainActivity mainActivity){
         this.mainActivity = mainActivity;
-    }
-
-    public void setCallback(MqttCallbackExtended callback) {
-        mqttAndroidClient.setCallback(callback);
     }
 
     public void subscribe(String serverURI, String topic){
@@ -69,6 +57,7 @@ public class MqttHelper {
 //        mqttConnectOptions.setPassword(password.toCharArray());
 
         try {
+            mainActivity.appendOutputText("Connecting");
             mqttAndroidClient.connect(mqttConnectOptions, subscriptionInfo, new IMqttActionListener() {
                 @Override
                 public void onSuccess(IMqttToken asyncActionToken) {
@@ -100,6 +89,26 @@ public class MqttHelper {
         }
     }
 
+    public void unsubscribe(String topic) {
+        try {
+            mqttAndroidClient.unsubscribe(topic, topic, new IMqttActionListener() {
+                @Override
+                public void onSuccess(IMqttToken asyncActionToken) {
+                    String topic = (String)asyncActionToken.getUserContext();
+                    mainActivity.appendOutputText(String.format("Unsubscribed to topic: %s", topic));
+                    disconnect();
+                }
+
+                @Override
+                public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+
+                }
+            });
+        } catch (MqttException e) {
+            e.printStackTrace();
+        }
+    }
+
     private void subscribeToTopic(String topic) {
         try {
             mqttAndroidClient.subscribe(topic, 0, topic, new IMqttActionListener() {
@@ -120,22 +129,12 @@ public class MqttHelper {
         }
     }
 
-    private void unsubscribe() {
-
-
-        try {
-            mqttAndroidClient.unsubscribe("topic");
-        } catch (MqttException e) {
-            e.printStackTrace();
-        }
-    }
-
     private void disconnect() {
         try {
             mqttAndroidClient.disconnect(null, new IMqttActionListener() {
                 @Override
                 public void onSuccess(IMqttToken asyncActionToken) {
-                    mainActivity.appendOutputText(String.format("Disconnect."));
+                    mainActivity.appendOutputText(String.format("Disconnected."));
                 }
 
                 @Override
