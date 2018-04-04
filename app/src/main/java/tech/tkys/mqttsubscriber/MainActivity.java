@@ -1,16 +1,15 @@
 package tech.tkys.mqttsubscriber;
 
+import android.content.Context;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-
-import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
-import org.eclipse.paho.client.mqttv3.MqttCallbackExtended;
-import org.eclipse.paho.client.mqttv3.MqttMessage;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,6 +26,8 @@ public class MainActivity extends AppCompatActivity {
     EditText topicEditText;
 
     TextView outputTextView;
+
+    ConstraintLayout backgroundLayout;
 
     String outputText = "";
 
@@ -57,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
         brokerPortEditText = findViewById(R.id.brokerPortEditText);
         topicEditText = findViewById(R.id.topicEditText);
         outputTextView = findViewById(R.id.outputTextView);
+        backgroundLayout = findViewById(R.id.backgroundLayout);
 
         subscribeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,11 +81,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // background
-        findViewById(R.id.backgroundLayout).setOnClickListener(new View.OnClickListener() {
+        backgroundLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                // Close software keyboard
+                InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputMethodManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
             }
         });
 
