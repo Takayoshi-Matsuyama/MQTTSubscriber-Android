@@ -16,7 +16,7 @@
         android:layout_marginEnd="286dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:text="Broker IP Address"
+        android:text="Server IP Address"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -25,14 +25,14 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <EditText
-        android:id="@+id/brokerIpEditText"
+        android:id="@+id/serverIpEditText"
         android:layout_width="169dp"
         android:layout_height="47dp"
         android:layout_marginEnd="15dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="48dp"
         android:ems="10"
-        android:inputType="textPersonName"
+        android:inputType="textUri"
         android:text="192.168.0.3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -51,7 +51,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/brokerIpEditText" />
+        app:layout_constraintTop_toBottomOf="@+id/serverIpEditText" />
 
     <EditText
         android:id="@+id/topicEditText"
@@ -61,7 +61,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:ems="10"
-        android:inputType="textPersonName"
+        android:inputType="text"
         android:text="MQTTTest"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -127,7 +127,7 @@
         android:layout_marginStart="60dp"
         android:layout_marginTop="16dp"
         android:text="Port"
-        app:layout_constraintBottom_toTopOf="@+id/brokerPortEditText"
+        app:layout_constraintBottom_toTopOf="@+id/serverPortEditText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.571"
         app:layout_constraintStart_toEndOf="@+id/textView"
@@ -135,7 +135,7 @@
         app:layout_constraintVertical_chainStyle="spread_inside" />
 
     <EditText
-        android:id="@+id/brokerPortEditText"
+        android:id="@+id/serverPortEditText"
         android:layout_width="142dp"
         android:layout_height="47dp"
         android:layout_marginBottom="40dp"
@@ -143,11 +143,11 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="13dp"
         android:ems="10"
-        android:inputType="textPersonName"
+        android:inputType="number"
         android:text="1883"
         app:layout_constraintBottom_toTopOf="@+id/topicEditText"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/brokerIpEditText"
+        app:layout_constraintStart_toEndOf="@+id/serverIpEditText"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
 

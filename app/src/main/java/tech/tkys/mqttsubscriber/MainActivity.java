@@ -19,9 +19,9 @@ public class MainActivity extends AppCompatActivity {
 
     Button unsubscribeButton;
 
-    EditText brokerIpEditText;
+    EditText serverIpEditText;
 
-    EditText brokerPortEditText;
+    EditText serverPortEditText;
 
     EditText topicEditText;
 
@@ -54,8 +54,8 @@ public class MainActivity extends AppCompatActivity {
 
         subscribeButton = findViewById(R.id.subscribeButton);
         unsubscribeButton = findViewById(R.id.unsubscribeButton);
-        brokerIpEditText = findViewById(R.id.brokerIpEditText);
-        brokerPortEditText = findViewById(R.id.brokerPortEditText);
+        serverIpEditText = findViewById(R.id.serverIpEditText);
+        serverPortEditText = findViewById(R.id.serverPortEditText);
         topicEditText = findViewById(R.id.topicEditText);
         outputTextView = findViewById(R.id.outputTextView);
         backgroundLayout = findViewById(R.id.backgroundLayout);
@@ -63,8 +63,8 @@ public class MainActivity extends AppCompatActivity {
         subscribeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String serverIpAddress = brokerIpEditText.getText().toString();
-                String serverPort = brokerPortEditText.getText().toString();
+                String serverIpAddress = serverIpEditText.getText().toString();
+                String serverPort = serverPortEditText.getText().toString();
                 String serverURI = String.format("tcp://%s:%s", serverIpAddress, serverPort);
                 String topic = topicEditText.getText().toString();
 
