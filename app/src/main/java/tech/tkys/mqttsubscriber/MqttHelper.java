@@ -41,7 +41,7 @@ public class MqttHelper {
 
             @Override
             public void messageArrived(String topic, MqttMessage mqttMessage) throws Exception {
-                mainActivity.appendOutputText(mqttMessage.toString());
+                mainActivity.appendOutputText(String.format("[%s] %s", topic, mqttMessage.toString()));
             }
 
             @Override
@@ -93,7 +93,7 @@ public class MqttHelper {
                 @Override
                 public void onSuccess(IMqttToken asyncActionToken) {
                     String topic = (String)asyncActionToken.getUserContext();
-                    mainActivity.appendOutputText(String.format("Unsubscribed to topic: %s", topic));
+                    mainActivity.appendOutputText(String.format("Unsubscribed from topic: %s", topic));
                     mainActivity.onSubscriptionStatusChanged(false);
 
                     disconnect();
@@ -149,19 +149,44 @@ public class MqttHelper {
         }
     }
 
+    /**
+     * Represents information for MQTT subscription.
+     */
     private class MqttSubscriptionInfo {
         private String serverURI;
         private String topic;
 
+        /**
+         * Constructs an instance of MqttSubscriptionInfo.
+         * @param serverURI MQTT server URI
+         * @param topic     Topic to subscribe
+         * @throws NullPointerException when {@code serverURI == null || topic == null}
+         */
         public MqttSubscriptionInfo(String serverURI, String topic) {
+            if (serverURI == null) {
+                throw new NullPointerException("serverURI");
+            }
+
+            if (topic == null) {
+                throw new NullPointerException("topic");
+            }
+
             this.serverURI = serverURI;
             this.topic = topic;
         }
 
+        /**
+         * Gets the MQTT server URI
+         * @return MQTT server URI
+         */
         public String getServerURI() {
             return this.serverURI;
         }
 
+        /**
+         * Gets the topic to subscribe
+         * @return topic to subscribe
+         */
         public String getTopic() {
             return this.topic;
         }
