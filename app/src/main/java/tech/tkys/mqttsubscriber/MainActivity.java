@@ -11,28 +11,27 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity {
+/**
+ * Activity class for the main gui.
+ */
+public final class MainActivity extends AppCompatActivity {
 
-    MqttHelper mqttHelper;
+    private MqttHelper mqttHelper;
+    private Button subscribeButton;
+    private Button unsubscribeButton;
+    private EditText serverIpEditText;
+    private EditText serverPortEditText;
+    private EditText topicEditText;
+    private TextView outputTextView;
+    private ConstraintLayout backgroundLayout;
+    private String outputText = "";
 
-    Button subscribeButton;
-
-    Button unsubscribeButton;
-
-    EditText serverIpEditText;
-
-    EditText serverPortEditText;
-
-    EditText topicEditText;
-
-    TextView outputTextView;
-
-    ConstraintLayout backgroundLayout;
-
-    String outputText = "";
-
-    public void onSubscriptionStatusChanged(boolean isSubscribed) {
-        if (isSubscribed) {
+    /**
+     * Toggles 'Subscribe' and 'Unsubscribe' buttons' state based on MQTT subscription status.
+     * @param isSubscriptionActive true if the subscription is active.
+     */
+    public void toggleSubscriptionButtonState(boolean isSubscriptionActive) {
+        if (isSubscriptionActive) {
             subscribeButton.setEnabled(false);
             unsubscribeButton.setEnabled(true);
         } else {
@@ -41,12 +40,24 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Appends text to the output message area.
+     * @param text The text to be appended.
+     */
     public void appendOutputText(String text) {
+        if (text == null) {
+            return;
+        }
+
         outputText = String.format("%s%n%s", outputText, text);
         outputTextView.setText(outputText);
         Log.w("MQTT", outputText);
     }
 
+    /**
+     * Performs initialization of all fragments.
+     * @param savedInstanceState A mapping from String keys to various Parcelable values.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +71,12 @@ public class MainActivity extends AppCompatActivity {
         outputTextView = findViewById(R.id.outputTextView);
         backgroundLayout = findViewById(R.id.backgroundLayout);
 
+        this.toggleSubscriptionButtonState(false);
+
+        // Activate MQTT Helper
+        mqttHelper = new MqttHelper(this);
+
+        // 'Subscribe' button click handler
         subscribeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -72,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // 'Unsubscribe' button click handler
         unsubscribeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,6 +99,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // Background click handler
         backgroundLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -89,8 +108,5 @@ public class MainActivity extends AppCompatActivity {
                 inputMethodManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
             }
         });
-
-        mqttHelper = new MqttHelper(this);
-        unsubscribeButton.setEnabled(false);
     }
 }
